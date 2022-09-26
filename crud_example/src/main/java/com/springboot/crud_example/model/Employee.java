@@ -11,9 +11,17 @@ import javax.persistence.Table;
 @Table(name="employees")
 public class Employee {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	
+	@Column(name="firstName",nullable=false)
 	private String firstName;
+	
+	@Column(name="lastName",nullable=false)
 	private String lastName;
+	
+	@Column(name="email",nullable=false)
 	private String email;
 	
 	public Employee() {
@@ -29,8 +37,6 @@ public class Employee {
 		this.email = email;
 	}
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	public long getId() {
 		return id;
 	}
@@ -39,7 +45,6 @@ public class Employee {
 		this.id = id;
 	}
 
-	@Column(name="firstName",nullable=false)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -48,7 +53,6 @@ public class Employee {
 		this.firstName = firstName;
 	}
 	
-	@Column(name="email",nullable=false)
 	public String getEmail() {
 		return email;
 	}
@@ -57,7 +61,6 @@ public class Employee {
 		this.email = email;
 	}
 
-	@Column(name="lastName",nullable=false)
 	public String getLastName() {
 		return lastName;
 	}
