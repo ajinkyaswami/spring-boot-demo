@@ -27,9 +27,6 @@ public class EmployeeController
 {
 	@Autowired
 	private EmployeeService empService;
-	/*
-	 * @Autowired private EmployeeRepository empRepository;
-	 */
 	
 	public EmployeeController(EmployeeService empService)
 	{
@@ -38,23 +35,13 @@ public class EmployeeController
 	
 	@GetMapping("/employees")
 	public List<Employee> getAllEmployees()
-	{
-		//return empRepository.findAll();
-		
+	{	
 		return empService.showAllEmployees();
 	}
 
-	//public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable(value="id") Long employeeId){
-		
-		//Optional<Employee> emp=empRepository.findById(employeeId);
 	@GetMapping("/employees/{id}")
 	public ResponseEntity <Employee> getEmployeeById(@PathVariable(value="id") Long employeeId)
 	{
-		//Employee emp=empRepository.findById(employeeId).get();
-		//Employee emp=empRepository.findById(employeeId).orElse(null);
-		//return ResponseEntity.ok(emp);
-		
-		//Employee emp=empService.showEmployeeById(employeeId);
 		return ResponseEntity.ok(empService.showEmployeeById(employeeId));
 	}
 	
@@ -62,7 +49,6 @@ public class EmployeeController
 	@ResponseStatus(HttpStatus.CREATED)
 	public Employee createEmployee(@Valid @RequestBody Employee employee)
 	{
-		//return empRepository.save(employee);
 		return empService.addEmployee(employee);
 	}
 	
@@ -70,31 +56,12 @@ public class EmployeeController
 	public ResponseEntity <Employee> updateEmployee(@PathVariable(value="id") Long employeeId,
 			@Valid @RequestBody Employee empDetails)
 	{
-		
-		//Employee employee=;
-		
-		//Optional <Employee> employee=empRepository.findById(employeeId);
-		//Employee emp1=(Employee) employee;
-		
-		/*
-		 * employee.setEmail(empDetails.getEmail());
-		 * employee.setFirstName(empDetails.getFirstName());
-		 * employee.setLastName(empDetails.getLastName());
-		 * 
-		 * final Employee updatedEmployee=empRepository.save(employee);
-		 */
 		return ResponseEntity.ok(empService.editEmployee(employeeId, empDetails));
 	}
 	
 	@DeleteMapping("/employees/{id}")
 	public Map<String,Boolean> deleteEmployee(@PathVariable(value="id")Long employeeId)
 	{
-		//Employee employee=empRepository.findById(employeeId).get();
-		
-		//Map <String,Boolean> response=new HashMap<>();
-		
-		//response.put("Deleted", Boolean.TRUE);
-		
 		return empService.removeEmployee(employeeId);
 	}
 }

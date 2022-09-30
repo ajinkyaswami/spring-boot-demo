@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.crud_example.error.exceptions.ResourceNotFoundException;
 import com.springboot.crud_example.model.Employee;
 import com.springboot.crud_example.repository.EmployeeRepository;
 
@@ -26,10 +27,9 @@ public class EmployeeService
 		return empRepository.findAll();
 	}
 	
-	public Employee showEmployeeById(Long employeeId)
+	public Employee showEmployeeById(Long employeeId)throws ResourceNotFoundException
 	{
-		//Employee emp=empRepository.findById(employeeId).get();
-		Employee emp=empRepository.findById(employeeId).orElse(null);
+		Employee emp=empRepository.findById(employeeId).orElseThrow(()->new ResourceNotFoundException("Employee not found for given id "+employeeId));
 		return emp;			
 	}
 	
@@ -38,14 +38,11 @@ public class EmployeeService
 		return empRepository.save(emp);
 	}
 	
-	public Employee editEmployee(Long employeeId,Employee empDetails)
+	public Employee editEmployee(Long employeeId,Employee empDetails)throws ResourceNotFoundException
 	{
 		
-		Employee employee=empRepository.findById(employeeId).get();
-		
-		//Optional <Employee> employee=empRepository.findById(employeeId);
-		//Employee emp1=(Employee) employee;
-		
+		Employee employee=empRepository.findById(employeeId).orElseThrow(()->new ResourceNotFoundException("Employee not found for given id "+employeeId));
+				
 		employee.setEmail(empDetails.getEmail());
 		employee.setFirstName(empDetails.getFirstName());
 		employee.setLastName(empDetails.getLastName());
@@ -54,10 +51,10 @@ public class EmployeeService
 		return updatedEmployee;
 	}
 	
-	public Map<String,Boolean> removeEmployee(Long employeeId)
+	public Map<String,Boolean> removeEmployee(Long employeeId)throws ResourceNotFoundException
 	{
 		
-		Employee employee=empRepository.findById(employeeId).get();
+		Employee employee=empRepository.findById(employeeId).orElseThrow(()->new ResourceNotFoundException("Employee not found for given id "+employeeId));
 		
 		empRepository.delete(employee);
 		
